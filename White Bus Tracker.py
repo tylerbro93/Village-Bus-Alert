@@ -1,5 +1,5 @@
 from time import sleep
-
+import msvcrt
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 
@@ -15,7 +15,7 @@ class BusWatcher():
 
     def updateTimes(self):
         self.times.clear()
-        client = urlopen(self.url)
+        client = urlopen(self.url, timeout=2000)
         page = client.read()
         soup_page = BeautifulSoup(page, "html.parser")
 
@@ -33,17 +33,19 @@ class BusWatcher():
         return self.times
 
 
-def __non_priority_update(obj):
+def __tracker(obj, waitTime):
     keepGoing = True
     tenth_of_a_minute = 0  # used to keep track of how many tenths of a second has passed
     while(keepGoing == True):
         sleep(1)  # waits a tenth of a second
         tenth_of_a_minute = tenth_of_a_minute + 1
-        if(tenth_of_a_minute == 60):
+        if(msvcrt.kbhit()):
+            keepGoing = False
+            print("Done")
+        elif(tenth_of_a_minute == waitTime):
             tenth_of_a_minute = 0
             obj.updateTimes()
             print("\n" * 80)
-            print(obj.times[0])
             try:
                 print("Latest bus arrival time: " + obj.times[0])
                 print("\nOther bus arrival times")
@@ -53,12 +55,15 @@ def __non_priority_update(obj):
                 print("No bus times found")
 
 
-
 if __name__ == "__main__":
     watcher = BusWatcher()
     keepGoing = True
     print("Type number for the choice you want to run\n")
     while (keepGoing == True):
-        choice = input("1. Get times for bus arrival\n Choice: ")
+        choice = input("1. Get times for bus arrival\n2. Track Bus\n3. Quit\nChoice: ")
         if(choice == "1"):
-            __non_priority_update(watcher)
+            __tracker(watcher, 60)
+        elif(choice == "2"):
+            __tracker(watcher, 10)
+        else:
+            keepGoing = False
