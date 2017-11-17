@@ -37,6 +37,13 @@ class BusWatcher():
     def getTimes(self):
         return self.times
 
+    def getLatestBus(self):
+        try:
+            times = self.times
+            return times
+        except IndexError:
+            return "No Buses are running"
+
 
 def __tracker(obj, waitTime):
     keepGoing = True
