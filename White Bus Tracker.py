@@ -33,6 +33,9 @@ class BusWatcher():
         except TimeoutError:
             print("Connection Fatal")
             self.e = 1
+        except WindowsError:
+            print("connection terminated by host")
+            self.e = 1
 
     def getTimes(self):
         return self.times
