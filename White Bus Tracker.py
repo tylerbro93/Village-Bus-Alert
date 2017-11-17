@@ -61,6 +61,7 @@ def __tracker(obj, waitTime):
                     print("No bus times found")
                 elif(obj.e == 1):
                     print("Could not talk to host server!")
+            print("\n\nPress any key in the window's console to return to main menu")
 
 
 if __name__ == "__main__":
