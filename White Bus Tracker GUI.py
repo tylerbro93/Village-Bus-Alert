@@ -45,7 +45,10 @@ class GUI:
         try:
             self.watcher.updateTimes()
             times = self.watcher.getLatestBus()
-            message = "Latest Bus Arrival Time: " + times[0] + "\nOther Bus Arrival Times: \n"
+            message = ""
+            if(self.watcher.e == 1):
+                message = "HOST SERVER HAS REFUSED TO RESPOND!\nTIMES COULD NOT BE UPDATED!\n"
+            message = message + "Latest Bus Arrival Time: " + times[0] + "\nOther Bus Arrival Times: \n"
             for i in range(1, len(times)):
                 message = message + "\t" + times[i] + "\n"
         except IndexError:
