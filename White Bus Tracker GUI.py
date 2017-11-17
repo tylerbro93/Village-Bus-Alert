@@ -9,21 +9,23 @@ class GUI:
         self.root = Tk()
         self.root.title("Village Bus Tracker")
         #  Frames
-        self.rootFrame = Frame(self.root, bg="dodgerblue")
-        self.buttonFrame = Frame(self.rootFrame, bg="dodgerblue")
-        self.messageFrame = Frame(self.rootFrame, bg="dodgerblue")
+        self.rootFrame = Frame(self.root, bg="purple4")
+        self.buttonFrame = Frame(self.rootFrame, bg="purple4")
+        self.messageFrame = Frame(self.rootFrame, bg="purple4")
+        self.separator = Frame(self.rootFrame, height=10, bg="purple4")
         #  Buttons
         self.checkBusTimesButton = Button(self.buttonFrame, text="Check Bus Times", bg="slateblue4",
-                                          command=self.checkBusTimes)
+                                          command=self.checkBusTimes, activebackground="mediumpurple4")
         self.trackBus = Button(self.buttonFrame, text="Start Tracking buses", command=self.turnOnTracker,
-                               bg="slateblue4")
+                               bg="slateblue4", activebackground="mediumpurple4")
         self.stopTracking = Button(self.buttonFrame, text="Stop Tracking", command=self.turnOffTracker, state=DISABLED,
-                                   bg="slateblue4")
+                                   bg="slateblue4", activebackground="mediumpurple4")
         #  Text Box
-        self.textBox = Text(self.messageFrame, height=10, width=37, bg="royalblue4")
+        self.textBox = Text(self.messageFrame, height=10, width=37, bg="slateblue4")
         #  Packing Frames
         self.rootFrame.pack()
         self.buttonFrame.pack(side="top")
+        self.separator.pack(side="top", fill=X, padx=5, pady=5)
         self.messageFrame.pack(side="bottom")
         #  Packing Buttons
         self.checkBusTimesButton.grid(row=0, column=0)
