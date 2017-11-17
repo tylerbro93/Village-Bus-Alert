@@ -13,12 +13,14 @@ class GUI:
         self.buttonFrame = Frame(self.rootFrame, bg="dodgerblue")
         self.messageFrame = Frame(self.rootFrame, bg="dodgerblue")
         #  Buttons
-        self.checkBusTimesButton = Button(self.buttonFrame, text="Check Bus Times", bg="grey",
+        self.checkBusTimesButton = Button(self.buttonFrame, text="Check Bus Times", bg="slateblue4",
                                           command=self.checkBusTimes)
-        self.trackBus = Button(self.buttonFrame, text="Start Tracking buses", command=self.turnOnTracker)
-        self.stopTracking = Button(self.buttonFrame, text="Stop Tracking", command=self.turnOffTracker, state=DISABLED)
+        self.trackBus = Button(self.buttonFrame, text="Start Tracking buses", command=self.turnOnTracker,
+                               bg="slateblue4")
+        self.stopTracking = Button(self.buttonFrame, text="Stop Tracking", command=self.turnOffTracker, state=DISABLED,
+                                   bg="slateblue4")
         #  Text Box
-        self.textBox = Text(self.messageFrame, height=10, width=37)
+        self.textBox = Text(self.messageFrame, height=10, width=37, bg="royalblue4")
         #  Packing Frames
         self.rootFrame.pack()
         self.buttonFrame.pack(side="top")
@@ -62,13 +64,16 @@ class GUI:
     def trackingSystem(self):
         if(self.tracker == True):
             self.checkBusTimes()
-            timeString = self.watcher.times[0]
-            gar, timeString = timeString.split(":")
-            minute, gar = timeString.split(" ")
-            print(minute)
-            currentMinute = datetime.datetime.now().minute
-            if(currentMinute + 5 > int(minute)):
-                winsound.Beep(1000, 600)
+            try:
+                timeString = self.watcher.times[0]
+                gar, timeString = timeString.split(":")
+                minute, gar = timeString.split(" ")
+                currentMinute = datetime.datetime.now().minute
+                if(currentMinute + 5 > int(minute)):
+                    winsound.Beep(1000, 600)
+            except IndexError:
+                self.textBox.delete(1.0, END)
+                self.textBox.insert(END, "NO BUSES ARE RUNNING!\nTRACKING IS CURRENTLY USELESS!")
         self.textBox.after(30000, self.trackingSystem)
 
 
