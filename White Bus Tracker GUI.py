@@ -1,10 +1,12 @@
+import datetime
 from tkinter import *
+import winsound
 WhiteBusTracker = __import__('White Bus Tracker')
 
 
 class GUI:
-    def __init__(self, root):
-        self.root = root
+    def __init__(self):
+        self.root = Tk()
         self.root.title("Village Bus Tracker")
         #  Frames
         self.rootFrame = Frame(self.root, bg="dodgerblue")
@@ -13,8 +15,8 @@ class GUI:
         #  Buttons
         self.checkBusTimesButton = Button(self.buttonFrame, text="Check Bus Times", bg="grey",
                                           command=self.checkBusTimes)
-        self.trackBus = Button(self.buttonFrame, text="Start Tracking buses")
-        self.stopTracking = Button(self.buttonFrame, text="Stop Tracking")
+        self.trackBus = Button(self.buttonFrame, text="Start Tracking buses", command=self.turnOnTracker)
+        self.stopTracking = Button(self.buttonFrame, text="Stop Tracking", command=self.turnOffTracker, state=DISABLED)
         #  Text Box
         self.textBox = Text(self.messageFrame, height=10, width=37)
         #  Packing Frames
@@ -29,6 +31,11 @@ class GUI:
         self.textBox.pack()
         #  Initialize busWatcher
         self.watcher = WhiteBusTracker.BusWatcher()
+        #  Tracker Switch
+        self.tracker = False
+        self.trackingSystem()
+        #  Renders GUI
+        self.root.mainloop()
 
     def checkBusTimes(self):
         try:
@@ -42,8 +49,29 @@ class GUI:
         self.textBox.delete(1.0, END)
         self.textBox.insert(END, message)
 
+    def turnOnTracker(self):
+        self.tracker = True
+        self.trackBus.config(state=DISABLED)
+        self.stopTracking.config(state=NORMAL)
+
+    def turnOffTracker(self):
+        self.tracker = False
+        self.trackBus.config(state=NORMAL)
+        self.stopTracking.config(state=DISABLED)
+
+    def trackingSystem(self):
+        if(self.tracker == True):
+            self.checkBusTimes()
+            timeString = self.watcher.times[0]
+            gar, timeString = timeString.split(":")
+            minute, gar = timeString.split(" ")
+            print(minute)
+            currentMinute = datetime.datetime.now().minute
+            if(currentMinute + 5 > int(minute)):
+                winsound.Beep(1000, 600)
+        self.textBox.after(30000, self.trackingSystem)
 
 
-root = Tk()
-gui = GUI(root)
-root.mainloop()
+if __name__ == "__main__":
+    gui = GUI()
+
