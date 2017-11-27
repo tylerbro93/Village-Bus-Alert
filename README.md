@@ -1,4 +1,4 @@
-# Village Bus Alerter
+# Village Bus Alerter <img src="https://img.shields.io/badge/Created%20By-Tyler%20Brown-blue.svg>
 This project helps residents who live at the Gamecock Village be notified when the campus bus is in range of the 
 apartment complex. The user has a choice of manually updating the bus times by hitting the \[**Check Bus Times**\].
 In order to track the bus and be alerted when the bus is less than 5 minutes away just hit \[**Start Tracking Buses**\].
@@ -43,6 +43,11 @@ used as an API.
 * [tylerbro93](https://github.com/tylerbro93/)
 
 # License
+The Village Bus Alerter is created under the [MIT License](./LICENSE)
+
+# NOTES
+* This project can be modified and used for free
+* Give credit if used
 
 
 
